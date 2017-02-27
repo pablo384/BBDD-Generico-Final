@@ -4,6 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -68,10 +72,24 @@ class LaminaBBDD extends JPanel{
     public void conectarBBDD(){
         miConexion=null;
 
-        try {
-            miConexion=DriverManager.getConnection("jdbc:mysql://localhost:3306/cursosql", "root", "");
+        String datos[]=new String[3];
 
-        }catch (Exception e) {
+        try {
+            entrada=new FileReader("C:"+ File.separator+"Users"+ File.separator+"pablo"+ File.separator+"Desktop"+ File.separator+"datos_config.txt");
+            BufferedReader miBuffer=new BufferedReader(entrada);
+
+            for (int i=0;i<=2;i++){
+                datos[i]=miBuffer.readLine();
+            }
+            miConexion=DriverManager.getConnection(datos[0], datos[1], datos[2]);
+            entrada.close();
+
+        }catch (IOException i){
+            i.printStackTrace();
+
+            JOptionPane.showMessageDialog(this,"No se ha encontrado el archivo de conexion");
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -135,6 +153,5 @@ class LaminaBBDD extends JPanel{
 
     private Connection miConexion;
 
-
-
+    private FileReader entrada;
 }

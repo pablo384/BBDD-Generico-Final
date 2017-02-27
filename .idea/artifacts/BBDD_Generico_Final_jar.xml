@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="BBDD Generico Final:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/BBDD_Generico_Final_jar</output-path>
+    <root id="archive" name="BBDD Generico Final.jar">
+      <element id="module-output" name="BBDD Generico Final" />
+      <element id="extracted-dir" path="$USER_HOME$/Desktop/mysql-connector-java-5.1.40-bin.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
