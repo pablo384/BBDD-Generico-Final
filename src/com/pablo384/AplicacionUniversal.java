@@ -1,13 +1,11 @@
 package com.pablo384;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -75,7 +73,26 @@ class LaminaBBDD extends JPanel{
         String datos[]=new String[3];
 
         try {
-            entrada=new FileReader("C:"+ File.separator+"Users"+ File.separator+"pablo"+ File.separator+"Desktop"+ File.separator+"datos_config.txt");
+            entrada = new FileReader("C:" + File.separator + "Users" + File.separator + "pablo" + File.separator + "Desktop" + File.separator + "datos_config.txt");
+        }catch (IOException o) {
+
+            JOptionPane.showMessageDialog(this,"No se ha encontrado el archivo de configuracion");
+
+            JFileChooser chooser = new JFileChooser();
+            FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                    "TXT File", "txt");
+            chooser.setFileFilter(filter);
+            int returnVal = chooser.showOpenDialog(this);
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+
+                try {
+                    entrada = new FileReader(chooser.getSelectedFile().getAbsolutePath());
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        try{
             BufferedReader miBuffer=new BufferedReader(entrada);
 
             for (int i=0;i<=2;i++){
@@ -84,12 +101,7 @@ class LaminaBBDD extends JPanel{
             miConexion=DriverManager.getConnection(datos[0], datos[1], datos[2]);
             entrada.close();
 
-        }catch (IOException i){
-            i.printStackTrace();
-
-            JOptionPane.showMessageDialog(this,"No se ha encontrado el archivo de conexion");
-        }
-        catch (Exception e) {
+        }catch (Exception e) {
             e.printStackTrace();
         }
     }
